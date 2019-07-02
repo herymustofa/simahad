@@ -11,11 +11,11 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('email')) {
+        if ($this->session->userdata('nim')) {
             redirect('user');
         }
 
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('nim', 'NIM', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
             $data['title'] =  'Login Page';
@@ -30,10 +30,11 @@ class Auth extends CI_Controller
 
     private function _login()
     {
-        $email = $this->input->post('email');
+        //$email = $this->input->post('email');
+        $nim = $this->input->post('nim');
         $password = $this->input->post('password');
 
-        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        $user = $this->db->get_where('user', ['nim' => $nim])->row_array();
 
         //jika user ada
         if ($user) {
@@ -42,7 +43,7 @@ class Auth extends CI_Controller
                 //cek password
                 if (password_verify($password, $user['password'])) {
                     $data = [
-                        'email' => $user['email'],
+                        'nim' => $user['nim'],
                         'role_id' => $user['role_id']
                     ];
                     $this->session->set_userdata($data);
@@ -107,6 +108,7 @@ class Auth extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata('email');
+        $this->session->unset_userdata('nim');
         $this->session->unset_userdata('role_id');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> You have been logout</div>');
         redirect('auth');
