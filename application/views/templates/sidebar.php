@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fab fa-app-store-ios"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">UINWS <sup>2019</sup></div>
+        <div class="sidebar-brand-text mx-3">SIMA'HAD <sup>2019</sup></div>
     </a>
 
     <!-- Divider -->
@@ -49,7 +49,7 @@
                 <?php else : ?>
                 <li class="nav-item">
                 <?php endif ?>
-                <a class="nav-link pb-0" href="<?= base_url($sm['url']); ?>">
+                <a class="nav-link pb-1 pt-1 " href="<?= base_url($sm['url']); ?>">
                     <i class="<?= $sm['icon']; ?>"></i>
                     <span><?= $sm['title']; ?></span></a>
             </li>
@@ -58,7 +58,12 @@
     <?php endforeach ?>
     <!-- Divider -->
 
-
+    <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('auth/logout') ?>">
+            <i class="fas  fa-fw fa-sign-out-alt"></i>
+            <span>Logout</span></a>
+    </li>
+    <hr class="sidebar-divider mt-0 mb-0">
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url('auth/logout') ?>">
             <i class="fas  fa-fw fa-sign-out-alt"></i>

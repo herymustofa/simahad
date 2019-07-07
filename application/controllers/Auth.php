@@ -17,6 +17,7 @@ class Auth extends CI_Controller
 
         $this->form_validation->set_rules('nim', 'NIM', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
         if ($this->form_validation->run() == false) {
             $data['title'] =  'Login Page';
             $this->load->view('templates/auth_header', $data);
@@ -49,19 +50,23 @@ class Auth extends CI_Controller
                     $this->session->set_userdata($data);
                     if ($user['role_id'] == 1) {
                         redirect('admin');
+                        // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> sukkse role admin</div>');
+                        // redirect('auth');
                     } else {
                         redirect('user');
+                        // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> sukkse role user</div>');
+                        // redirect('auth');
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong password</div>');
                     redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> This email has not activated</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> This NIM has not activated</div>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Email is not register</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> NIM is not register</div>');
             redirect('auth');
         }
     }
