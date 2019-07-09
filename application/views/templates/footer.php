@@ -73,6 +73,34 @@
             }
         })
     })
+
+    //FOR NAMA
+    $(document).ready(function() {
+        // $('#nama').val("");
+        $('#nim').keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                var nim = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('admin/getMahasiswa') ?>",
+                    dataType: "json",
+                    data: {
+                        nim: nim
+                    },
+                    cache: false,
+                    success: function(data) {
+                        console.log("sukses nda");
+                        $('#nama').val(data.name)
+                    },
+                    error: function(error) {
+                        alert('NIM tidak ada');
+                    }
+                })
+                return false;
+            }
+        });
+    });
 </script>
 
 </html>

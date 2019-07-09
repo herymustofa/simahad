@@ -59,9 +59,11 @@ class Santri extends CI_Controller
 
     public function historiIjin()
     {
+
         $data['title'] = 'History Pengajuan Ijin';
         $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
         $this->load->model('Santri_model', 'ijin');
+        $nim = $this->session->userdata('nim');
 
         //PAGINATION
         $this->load->library('pagination');
@@ -71,7 +73,7 @@ class Santri extends CI_Controller
         $config['attributes'] = array('class' => 'page-link');
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
-        $data['ijin'] = $this->ijin->getHistori($config['per_page'], $data['start']);
+        $data['ijin'] = $this->ijin->getHistori($config['per_page'], $data['start'], $nim);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -96,8 +98,9 @@ class Santri extends CI_Controller
     public function countHistoriPulang()
     {
         $this->load->model('Santri_model', 'ijin');
+        $nim = $this->session->userdata('nim');
 
-        $data = $this->ijin->countHistoriPulang();
+        $data = $this->ijin->countHistoriPulang($nim);
         // print_r($data);
         // echo "<hr>";
         // echo $data->tot;

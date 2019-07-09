@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Santri_model extends CI_Model
 {
-    public function getHistori($limit, $start)
+    public function getHistori($limit, $start, $nim)
     {
         // $query = "
         //             SELECT
@@ -15,7 +15,7 @@ class Santri_model extends CI_Model
         // return $this->db->query($query)->result_array();
         $this->db->order_by('id', 'DESC');
 
-        return $this->db->get('ijin', $limit, $start)->result_array();
+        return $this->db->get_where('ijin', array('nim' => $nim), $limit, $start)->result_array();
     }
 
     public function setPulang($id, $jam_masuk)
@@ -30,7 +30,7 @@ class Santri_model extends CI_Model
         return $this->db->query($query);
     }
 
-    public function countHistoriPulang()
+    public function countHistoriPulang($nim)
     {
         $query = "
             SELECT
@@ -38,13 +38,13 @@ class Santri_model extends CI_Model
             FROM
             ijin
             WHERE jam_masuk=0
-            AND nim = 100        
+            AND nim = $nim      
         ";
         return $this->db->query($query)->row();
     }
 
     public function countAllHistory()
     {
-        return $this->db->get('ijin')->num_rows();
+        return $this->db->get(' ijin')->num_rows();
     }
 }

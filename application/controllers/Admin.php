@@ -73,4 +73,90 @@ class Admin extends CI_Controller
         }
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Access changed!</div>');
     }
+
+    public function inputIjin()
+    {
+        $data['title'] = 'Form Pengajuan Ijin | ADMIN';
+        $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+        $data['nim'] = $this->input->post('nim');
+        $data['nama'] = $this->input->post('nama');
+
+        $this->form_validation->set_rules('nim', 'nim', 'required|trim');
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+        $this->form_validation->set_rules('keperluan', 'Keperluan', 'required|trim');
+        $this->form_validation->set_rules('hp', 'Handphone', 'required|trim|numeric');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/inputIjin', $data);
+            $this->load->view('templates/footer');
+            //var_dump($data);
+            //die;
+        } else {
+            if ($this->countHistoriPulang() == true) {
+                $data = [
+                    'nim'           => htmlspecialchars($this->input->post('nim', true)),
+                    'keperluan'     => htmlspecialchars($this->input->post('keperluan', true)),
+                    'no_hp'         => htmlspecialchars($this->input->post('hp', true)),
+                    'jam_keluar'    => time(),
+                    'jam_masuk'    => 0
+                ];
+
+                $this->db->insert('ijin', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Ijin Berhasil </div>');
+                redirect('admin/historiIjin');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Ijin gagal, masih dalam status ijin keluar</div>');
+                redirect('admin/inputIjin');
+            }
+        }
+    }
+
+    public function getMahasiswa()
+    {
+        $this->load->model('Admin_model', 'mhs');
+        $nim = $this->input->post('nim');
+        $data = $this->mhs->getMahasiswaByNim($nim);
+        echo json_encode($data);
+    }
+
+    public function countHistoriPulang()
+    {
+        $this->load->model('Admin_model', 'mhs');
+        $nim = $this->input->post('nim');
+
+        $data = $this->mhs->countHistoriPulang($nim);
+        if ($data->tot < 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function historiIjin()
+    {
+
+        $data['title'] = 'History Pengajuan Ijin | ADMIN';
+        $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+        $this->load->model('Admin_model', 'ijin');
+        $nim = $this->session->userdata('nim');
+
+        //PAGINATION
+        $this->load->library('pagination');
+        $config['base_url'] = base_url('admin/historiIjin');
+        $config['total_rows'] = $this->ijin->countAllHistory();
+        $config['per_page'] = 5;
+        $config['attributes'] = array('class' => 'page-link');
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+        $data['ijin'] = $this->ijin->getAllHistori($config['per_page'], $data['start']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/histori', $data);
+        $this->load->view('templates/footer');
+    }
 }

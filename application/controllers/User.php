@@ -13,8 +13,7 @@ class User extends CI_Controller
     {
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-        //var_dump($data);
-        //echo "selamat datang ". $data['user']['name'];
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
