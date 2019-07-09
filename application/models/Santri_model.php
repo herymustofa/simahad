@@ -13,6 +13,8 @@ class Santri_model extends CI_Model
         //             LIMIT $limit, $start
         //         ";
         // return $this->db->query($query)->result_array();
+        $this->db->order_by('id', 'DESC');
+
         return $this->db->get('ijin', $limit, $start)->result_array();
     }
 

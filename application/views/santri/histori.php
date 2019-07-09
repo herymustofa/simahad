@@ -40,6 +40,7 @@
                                 }
                                 ?>
                             </td>
+
                         </tr>
 
                     <?php endforeach ?>
