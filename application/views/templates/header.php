@@ -18,6 +18,10 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom fonts for datetimepicker-->
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/datetimepicker/jquery-ui.css">
+
+
 </head>
 
 <body id="page-top">

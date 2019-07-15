@@ -3,7 +3,11 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
+    <div class="row">
+        <div class="col-md">
 
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
@@ -19,8 +23,6 @@
                         <th scope="col">No. HP</th>
                         <th scope="col">Waktu Keluar</th>
                         <th scope="col">Waktu Masuk</th>
-                        <th scope="col">Batas Ijin</th>
-                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>

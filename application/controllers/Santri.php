@@ -111,4 +111,61 @@ class Santri extends CI_Controller
             return false;
         }
     }
+    public function inputIjinKhusus()
+    {
+        $data['title'] = 'Form Pengajuan Ijin Khusus';
+        $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+
+        $this->form_validation->set_rules('keperluan', 'Keperluan', 'required|trim');
+        $this->form_validation->set_rules('hp', 'Handphone', 'required|trim|numeric');
+        $this->form_validation->set_rules('p_pulang', 'Pulang', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('santri/ijinKhusus', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $nim = $this->session->userdata('nim');
+
+            if ($this->countHistoriPulang() == true) {
+
+                $pjm = htmlspecialchars($this->input->post('p_pulang', true));
+                $myTime = strtotime($pjm); 
+                // var_dump($myTime);
+                // die;
+                
+                $data = [
+                    'nim'           => htmlspecialchars($nim, true),
+                    'keperluan'     => htmlspecialchars($this->input->post('keperluan', true)),
+                    'no_hp'         => htmlspecialchars($this->input->post('hp', true)),
+                    'jam_keluar'    => time(),
+                    'p_jam_masuk'   => $myTime,
+                    'jam_masuk'    => 0
+                ];
+
+                $this->db->insert('ijin', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Ijin Berhasil </div>');
+                redirect('santri/historiIjin');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Ijin gagal, masih dalam status ijin keluar</div>');
+                redirect('santri');
+            }
+        }
+    }
+
+    public function test() {
+        echo "test";
+        echo "<hr>";
+        
+        $pulang = "08/19/2014";
+        echo $pulang."<br>";
+        $myTime = strtotime($pulang); 
+        echo $myTime;
+        echo "<hr>";
+
+        echo date("Y-m-d H:i:s", $myTime);
+    }
+    
 }

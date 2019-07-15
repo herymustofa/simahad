@@ -25,6 +25,11 @@
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
                 <span>Ijin</span></a>
         </li>
+        <li class="nav-item ">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/inputIjinKhusus') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Ijin Khusus</span></a>
+        </li>        
         <li class="nav-item">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/historiIjin') ?>">
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
