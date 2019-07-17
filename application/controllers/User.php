@@ -6,7 +6,7 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        is_logged_in();
+        //is_logged_in();
     }
 
     public function index()
@@ -55,7 +55,7 @@ class User extends CI_Controller
 
                 if ($this->upload->do_upload('image')) {
                     $old_image = $data['user']['image'];
-                    if ($old_image !=  'default1.jpg') {
+                    if ($old_image !=  'default.jpg') {
                         unlink(FCPATH . 'assets/img/profile/' . $old_image);
                     }
 
@@ -64,6 +64,8 @@ class User extends CI_Controller
                     // die;
                     $this->db->set('image', $new_image);
                 } else {
+                    $errorUpload = $this->upload->display_errors();
+                    //$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">$errorUpload</div>');
                     echo $this->upload->display_errors();
                 }
             }
@@ -73,6 +75,7 @@ class User extends CI_Controller
             $this->db->update('user');
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your profile has been updated</div>');
+            //$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">$errorUpload</div>');
             redirect('user');
         }
     }

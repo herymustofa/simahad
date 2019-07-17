@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Santri_model extends CI_Model
+class Musrifah_model extends CI_Model
 {
     public function getHistori($limit, $start, $nim)
     {
@@ -21,7 +21,7 @@ class Santri_model extends CI_Model
     public function getStatus($limit, $start, $nim)
     {
         $this->db->order_by('id', 'DESC');
-        return $this->db->get_where('ijin', array('nim' => $nim,'status' => 0), $limit, $start)->result_array();
+        return $this->db->get_where('ijin', array('status' => 0), $limit, $start)->result_array();
     }    
 
     public function setPulang($id, $jam_masuk)
@@ -35,6 +35,29 @@ class Santri_model extends CI_Model
         ";
         return $this->db->query($query);
     }
+
+    public function setApprovalIjin($id)
+    {
+        $query = "
+            UPDATE
+            `simahaddb`.`ijin`
+            SET
+            `status` = 1
+            WHERE `id` = $id           
+        ";
+        return $this->db->query($query);
+    }    
+
+    public function setNotApprovalIjin($id)
+    {
+        $query = "
+            DELETE
+            FROM
+            `simahaddb`.`ijin`
+            WHERE `id` = $id           
+        ";
+        return $this->db->query($query);
+    }        
 
     public function countHistoriPulang($nim)
     {

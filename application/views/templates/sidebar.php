@@ -8,33 +8,36 @@
         </div>
         <div class="sidebar-brand-text mx-3">SIMA'HAD <sup>2019</sup></div>
     </a>
-
     <!-- Divider -->
 
     <hr class="sidebar-divider">
     <?php
     $role_id = $this->session->userdata('role_id');
-    if ($role_id == 2) :
-
-        ?>
+        if ($role_id == 2) :
+    ?>
         <div class="sidebar-heading">
             Santri
         </div>
         <li class="nav-item ">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('santri') ?>">
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
-                <span>Ijin</span></a>
+                <span>Ijin Keluar</span></a>
         </li>
         <li class="nav-item ">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/inputIjinKhusus') ?>">
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
-                <span>Ijin Khusus</span></a>
+                <span>Ijin Pulang</span></a>
         </li>        
         <li class="nav-item">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/historiIjin') ?>">
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
                 <span>History Ijin</span></a>
         </li>
+        <li class="nav-item ">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/statusIjin') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Status</span></a>
+        </li>          
         <hr class="sidebar-divider">
     <?php elseif ($role_id == 1) :  ?>
         <div class="sidebar-heading">
@@ -43,7 +46,7 @@
         <li class="nav-item ">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('admin/inputIjin') ?>">
                 <i class="fas  fa-fw fa-sign-out-alt"></i>
-                <span>Ijin</span></a>
+                <span>Ijin Keluar</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link pb-1 pt-1" href="<?= base_url('admin/historiIjin') ?>">
@@ -56,6 +59,40 @@
                 <span>Laporan Ijin</span></a>
         </li>
         <hr class="sidebar-divider">
+    <?php elseif ($role_id == 3) :  ?>
+        <div class="sidebar-heading">
+            Santri
+        </div>
+        <li class="nav-item ">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Ijin Keluar</span></a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/inputIjinKhusus') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Ijin Pulang</span></a>
+        </li>        
+        <li class="nav-item">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/historiIjin') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>History Ijin</span></a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('santri/statusIjin') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Status</span></a>
+        </li>          
+        <hr class="sidebar-divider">     
+        <div class="sidebar-heading">
+            Musrifah
+        </div>       
+        <li class="nav-item">
+            <a class="nav-link pb-1 pt-1" href="<?= base_url('musrifah/appIjin') ?>">
+                <i class="fas  fa-fw fa-sign-out-alt"></i>
+                <span>Approval Ijin</span></a>
+        </li>        
+        <hr class="sidebar-divider">            
     <?php endif ?>
     <div class="sidebar-heading">
         Setting

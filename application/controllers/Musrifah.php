@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Santri extends CI_Controller
+class Musrifah extends CI_Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class Santri extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('santri/index', $data);
+        $this->load->view('musrifah/index', $data);
         $this->load->view('templates/footer');
     }
 
@@ -53,8 +53,8 @@ class Santri extends CI_Controller
                     ];
 
                     $this->db->insert('ijin', $data);
-                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Ijin Keluar berhasil dibuaat</div>');
-                    redirect('santri/historiIjin');
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Ijin Keluar berhasil, silahkan hub. musrifah untuk approval ijin </div>');
+                    redirect('santri/statusIjin');
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Ijin gagal, masih dalam status ijin</div>');
                     redirect('santri/HistoriIjin');
@@ -93,7 +93,6 @@ class Santri extends CI_Controller
 
     public function statusIjin()
     {
-
         $data['title'] = 'Status Pengajuan Ijin';
         $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
         $this->load->model('Santri_model', 'ijin');
@@ -101,7 +100,7 @@ class Santri extends CI_Controller
 
         //PAGINATION
         $this->load->library('pagination');
-        $config['base_url'] = base_url('santri/statusIjin');
+        $config['base_url'] = base_url('musrifah/statusIjin');
         $config['total_rows'] = $this->ijin->countAllHistory();
         $config['per_page'] = 5;
         $config['attributes'] = array('class' => 'page-link');
@@ -112,9 +111,35 @@ class Santri extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('santri/status', $data);
+        $this->load->view('musrifah/status', $data);
         $this->load->view('templates/footer');
     }    
+
+    public function appIjin()
+    {
+        $data['title'] = 'Approval Pengajuan Ijin';
+        $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+        $this->load->model('Musrifah_model', 'ijin');
+        $nim = $this->session->userdata('nim');
+
+        //PAGINATION
+        $this->load->library('pagination');
+        $config['base_url'] = base_url('musrifah/statusIjin');
+        $config['total_rows'] = $this->ijin->countAllHistory();
+        $config['per_page'] = 5;
+        $config['attributes'] = array('class' => 'page-link');
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+        $data['ijin'] = $this->ijin->getStatus($config['per_page'], $data['start'], $nim);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('musrifah/appIjin', $data);
+        $this->load->view('templates/footer');
+    }     
+
+
 
     public function pulang()
     {
@@ -206,17 +231,30 @@ class Santri extends CI_Controller
         }
     }
 
-    public function test() {
-        echo "test";
-        echo "<hr>";
-        
-        $pulang = "08/19/2014";
-        echo $pulang."<br>";
-        $myTime = strtotime($pulang); 
-        echo $myTime;
-        echo "<hr>";
+    public function approval()
+    {
+        $menu = $this->uri->segment(2);
+        $id = $this->uri->segment(3);
+        // $jam_masuk = time();
 
-        echo date("Y-m-d H:i:s", $myTime);
-    }
+        $this->load->model('Musrifah_model', 'ijin');
+        $this->ijin->setApprovalIjin($id);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Approval Ijin Berhasil</div>');
+        redirect('musrifah/appIjin');
+    }    
+
+    public function not_approval()
+    {
+        $menu = $this->uri->segment(2);
+        $id = $this->uri->segment(3);
+        // $jam_masuk = time();
+
+        $this->load->model('Musrifah_model', 'ijin');
+        $this->ijin->setNotApprovalIjin($id);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Ijin Dihapus Berhasil</div>');
+        redirect('musrifah/appIjin');
+    }    
     
 }

@@ -12,7 +12,7 @@
     <?php
 
     ?>
-    <form method="post" action="<?= base_url('santri/inputIjinKhusus') ?>">
+    <form autocomplete="off" method="post" action="<?= base_url('santri/inputIjinKhusus') ?>">
         <div class=" form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-sm">Nim</label>
             <div class="col-sm-5">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="hp" class="col-sm-2 col-form-label col-form-label-sm">Pulang</label>
+            <label for="hp" class="col-sm-2 col-form-label col-form-label-sm">Tanggal Kembali</label>
             <div class="col-sm-3">            
                 <div class="input-group date">
                     <input type="text" class="form-control form-control-sm"  id="p_pulang" name="p_pulang" value="<?= set_value('p_pulang'); ?>"></<input>

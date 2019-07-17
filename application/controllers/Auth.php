@@ -52,10 +52,12 @@ class Auth extends CI_Controller
                         redirect('admin');
                         // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> sukkse role admin</div>');
                         // redirect('auth');
-                    } else {
+                    } elseif ($user['role_id'] == 2) {
                         redirect('user');
                         // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> sukkse role user</div>');
                         // redirect('auth');
+                    } elseif ($user['role_id'] == 3) {
+                        redirect('musrifah');
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong password</div>');

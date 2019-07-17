@@ -12,17 +12,17 @@
     <?php
 
     ?>
-    <form autocomplete="off" method="post" action="<?= base_url('admin/inputIjin') ?>">
+    <form autocomplete="off" method="post" action="<?= base_url('santri/inputIjinKhusus') ?>">
         <div class=" form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-sm">Nim</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-sm" id="nim" name="nim" value="<?= set_value('nim'); ?>">
+                <input type="email" class="form-control form-control-sm" id="inputEmail3" value="<?= $user['nim'] ?>" disabled>
             </div>
         </div>
-        <div class=" form-group row">
-            <label for="nama" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-sm" id="nama" name="nama" readonly value="<?= set_value('nama'); ?>">
+                <input type="text" class="form-control form-control-sm" id="inputEmail3" value="<?= $user['name']  ?>" disabled>
             </div>
         </div>
         <div class="form-group row">
@@ -37,6 +37,15 @@
             <div class="col-sm-5">
                 <input type="text" class="form-control form-control-sm" id="hp" name="hp" value="<?= set_value('hp'); ?>">
                 <?= form_error('hp', '<small class="text-danger pl-3">', '</small>') ?>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="hp" class="col-sm-2 col-form-label col-form-label-sm">Pulang</label>
+            <div class="col-sm-3">            
+                <div class="input-group date">
+                    <input type="text" class="form-control form-control-sm"  id="p_pulang" name="p_pulang" value="<?= set_value('p_pulang'); ?>"></<input>
+                </div>        
+                <?= form_error('p_pulang', '<small class="text-danger pl-3">', '</small>') ?>
             </div>
         </div>
         <div class="form-group row">

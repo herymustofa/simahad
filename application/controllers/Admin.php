@@ -147,7 +147,7 @@ class Admin extends CI_Controller
         $this->load->library('pagination');
         $config['base_url'] = base_url('admin/historiIjin');
         $config['total_rows'] = $this->ijin->countAllHistory();
-        $config['per_page'] = 5;
+        $config['per_page'] = 10;
         $config['attributes'] = array('class' => 'page-link');
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
